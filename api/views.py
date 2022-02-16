@@ -69,11 +69,20 @@ def getData(request):
 # Function to count number detected_objects in db
 def CountStrings(data):
     data_count = []
-    str_data = ['jewellery','watch','gun','mobile','knife','e_cigarette','scissor','nail_cutter','cigar_cutter','laptop','lighter',
+    list_data = []
+    data_values = list(data.values())
+    for i in range(len(data)):
+        temp_data = data_values[i]['objects_detected'].split(',')
+        list_data.append(temp_data)
+    str_data = ['jewellery','watch','gun','mobile','knife','e-cigarette','scissor','nail_cutter','cigar_cutter','laptop','lighter',
     'battrey','ammo','gold','plier','cigarette_case','cigarette','cigar']
     for i in range(len(str_data)):
-        c = data.filter(objects_detected__icontains = str_data[i]).count()
-        data_count.append(c)
+        count = 0
+        for j in range(len(list_data)):
+            for k in range(len(list_data[j])):
+                if str_data[i] == list_data[j][k]:
+                    count = count + 1
+        data_count.append(count)
     context = {
         'str_data' : str_data,
         'data_count' : data_count

@@ -1,7 +1,8 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 class File(models.Model):
-    csv_file = models.FileField()
+    csv_file = models.FileField(validators=[FileExtensionValidator( ['csv'] )])
     uploaded = models.DateTimeField(auto_now_add=True)
 
     class Meta:
