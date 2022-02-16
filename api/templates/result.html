@@ -1,0 +1,30 @@
+{% include 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <form action="{% url 'getdata' %}" method="POST">{% csrf_token %}
+        From : <input type="date" value="From" name="from" required/>
+        To :<input type="date" value="To" name="to" required/>
+        <button type="submit">Search</button>
+    </form>
+    {% if data %}
+    <table class="table mt-2">
+        <thead>
+            <tr class="table">
+                <th class="col-4">Image Name</th>
+                <th class="col-4">Detected</th>
+                <th class="col-4">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in data %}
+            <tr>
+                <td>{{data.image_name}}</td>
+                <td>{{data.objects_detected}}</td>
+                <td><img src="/media/images/{{data.image_name}}" height="50px" width="50px"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
